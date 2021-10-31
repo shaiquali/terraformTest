@@ -8,7 +8,7 @@ inputs:
 
 module:
   #source: git::https://Chris530906:jxbdMb8APc9Her-sMWuM@gitlab.com/testtesttest530906/tf.git//terraform/rms-ec2-bootstrap
-  source: https://github.com/shaiquali/terraformTest/tree/master/terraform/rms-ec2-bootstrap
+  source: github.com/shaiquali/terraformTest/terraform/rms-ec2-bootstrap
   #source: https://github.com/RonnyKay/Colony-Playground/tree/master/terraform/rms-ec2-bootstrap
   #enable_auto_tagging: false
 
