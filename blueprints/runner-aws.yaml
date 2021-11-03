@@ -27,7 +27,7 @@ inputs:
 applications:
   - staging-vm:
         input_values:
-          - SANDBOX_ID: $colony.environment.id
+          - SANDBOX_ID: $torque.environment.id
           # - randomint: $colony.parameters.bob
           - randomint: 4
           # - randomint: $outputs.rms-ec2-bootstrap.randomint
@@ -44,7 +44,7 @@ services:
 
   - rms-ec2-bootstrap:
         input_values:
-          - branch: $colony.repos.current.branch
+          - branch: $torque.repos.current.branch
           - REGION: $REGION
   # - test:
   #       input_values:
