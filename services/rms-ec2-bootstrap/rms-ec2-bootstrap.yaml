@@ -12,7 +12,7 @@ module:
   #source: https://github.com/RonnyKay/Colony-Playground/tree/master/terraform/rms-ec2-bootstrap
   #enable_auto_tagging: false
 
-terraform_version: 0.15.0
+terraform_version: 0.11.0
 
 variables: 
   values:       
