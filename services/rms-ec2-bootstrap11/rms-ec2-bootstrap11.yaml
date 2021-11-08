@@ -7,7 +7,7 @@ inputs:
   
 
 module:
-  source: github.com/shaiquali/terraformTest/terraform11/terraform/rms-ec2-bootstrap
+  source: github.com/shaiquali/terraformTest/terraform/rms-ec2-bootstrap11
   #enable_auto_tagging: false
 
 terraform_version: 0.11.0
