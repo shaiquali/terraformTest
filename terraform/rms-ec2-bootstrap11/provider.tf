@@ -1,5 +1,5 @@
 provider "aws" {
-  version = "~> 3.37"
+  version = "~> v2.70.0"
   region  = "${var.aws_region}"
   #alias = "external-dns-in-commercial"
 }
