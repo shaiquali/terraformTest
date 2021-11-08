@@ -1,0 +1,66 @@
+
+spec_version: 1
+kind: application
+
+# This VM will auto power off 5 minutes after deployment.
+
+inputs:
+  - sandbox_id:
+  - randomint:
+  # - randomint1:
+
+
+
+source:
+  os_type: linux
+  image:
+    azure_image:
+      - urn: Canonical:UbuntuServer:16.04-LTS:latest
+        username: adminuser
+    ami:
+      - id: ami-08660f1c6fb6b01e7
+        region: eu-west-1
+        username: ubuntu
+      - id: ami-0565af6e282977273
+        region: us-east-1
+        username: ubuntu
+
+
+
+
+infrastructure:
+  compute:
+    spec:
+      azure:
+        vm_size: Standard_D2a_v4
+      aws: 
+        instance_type: t3.nano
+  connectivity:
+    internal:
+      - port_info:
+          port: 80
+          ingress-healthcheck:                 
+            healthy-threshold: 2
+            interval: 60
+            path: /
+            status-codes: 200-299
+            timeout: 30
+            unhealthy-threshold: 10
+
+  # permissions:
+  #     aws:
+  #       iam_instance_profile: cfox-cs-testrole 
+
+
+configuration:  
+  initialization:
+    script: init.sh
+  # start:
+  #   script: start.sh
+  healthcheck:
+    script: healthcheck.sh
+    timeout: 1001
+
+
+debugging:
+  connection_protocol: SSH

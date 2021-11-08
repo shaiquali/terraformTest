@@ -1,0 +1,29 @@
+spec_version: 1
+kind: TerraForm
+inputs:
+  - REGION:
+  - ROLE_ARN: PowerUserAccess
+  - branch:
+  
+
+module:
+  source: github.com/shaiquali/terraformTest/terraform11/terraform/rms-ec2-bootstrap
+  #enable_auto_tagging: false
+
+terraform_version: 0.11.0
+
+variables: 
+  values:       
+    - aws_region: $REGION
+
+
+
+outputs:
+  - randomint
+  
+permissions:  
+  aws:
+    role_arn: $ROLE_ARN
+
+debugging:
+  show_tf_plan: true
