@@ -5,7 +5,7 @@ kind: application
 # This VM will auto power off 5 minutes after deployment.
 
 inputs:
-  - SANDBOX_ID:
+  - sandbox_id:
   - randomint:
   # - randomint1:
 
