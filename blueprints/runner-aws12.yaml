@@ -41,7 +41,7 @@ applications:
   #         - randomint1: 4
 services:
 
-  - rms-ec2-bootstrap11:
+  - rms-ec2-bootstrap12:
         input_values:
           - branch: $torque.repos.current.branch
           - REGION: $REGION
