@@ -8,6 +8,7 @@ resource "aws_ssm_parameter" "foo" {
   name  = "foo121"
   type  = "String"
   value = "bar12"
+  overwrite = true
 
   tags = {
     "APPID" = "test"
