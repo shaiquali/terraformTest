@@ -108,4 +108,4 @@ ingress:
 #   enabled: false
 
 debugging:
-  availability: on
+  bastion_availability: enabled-on
