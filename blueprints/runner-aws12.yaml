@@ -40,10 +40,10 @@ applications:
   #         - randomint: 3
   #         - randomint1: 4
 services:
-  - rms-ec2-bootstrap12:
-    input_values:
-      - branch: $torque.repos.current.branch
-      - REGION: $REGION
+  - rms-ec2-bootstrap:
+        input_values:
+          - branch: $torque.repos.current.branch
+          - REGION: $REGION
   # - test:
   #       input_values:
   #         - tenant: $TENANT
@@ -56,29 +56,30 @@ ingress:
   listeners:
     - http: 80
       rules:
-        - path: /
-          application: staging-vm
-          port: 80
-          #shortcut: ${colony.environment.public_address}
-        - path: /bah
-          application: staging-vm
-          port: 80
-          #shortcut: $colony.environment.public_address
-        - path: /other
-          application: staging-vm
-          port: 80
-          #shortcut: ${PublicAddress}/other
-        - path: /other1
-          application: staging-vm
-          port: 80
-          #shortcut: ${colony.environment.public_address}/other1
-        # - path: /other2
-        #   application: staging-vm
-        #   port: 80
-        #   shortcut: $colony.environment.public_address/other2
-        - default: true
-          application: staging-vm
-          port: 80
+      - path: /
+        application: staging-vm
+        port: 80
+        #shortcut: ${colony.environment.public_address}
+      - path: /bah
+        application: staging-vm
+        port: 80
+        #shortcut: $colony.environment.public_address
+      - path: /other
+        application: staging-vm
+        port: 80
+        #shortcut: ${PublicAddress}/other
+      - path: /other1
+        application: staging-vm
+        port: 80
+        #shortcut: ${colony.environment.public_address}/other1
+      # - path: /other2
+      #   application: staging-vm
+      #   port: 80
+      #   shortcut: $colony.environment.public_address/other2
+      - default: true
+        application: staging-vm
+        port: 80
+
 
 # ingress:
 #   listeners:
