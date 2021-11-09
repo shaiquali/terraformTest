@@ -25,12 +25,12 @@ inputs:
 
 applications:
   - staging-vm:
-    input_values:
-      - SANDBOX_ID: $torque.environment.id
-          # - randomint: $colony.parameters.bob
-      - randomint: 4
-          # - randomint: $outputs.rms-ec2-bootstrap.randomint
-          # - randomint1: $colony.services.rms-ec2-bootstrap.outputs.randomint
+      input_values:
+        - SANDBOX_ID: $torque.environment.id
+            # - randomint: $colony.parameters.bob
+        - randomint: 4
+            # - randomint: $outputs.rms-ec2-bootstrap.randomint
+            # - randomint1: $colony.services.rms-ec2-bootstrap.outputs.randomint
           #depends_on:
           #  - rms-ec2-bootstrap
           #  - staging-vm1
