@@ -14,32 +14,34 @@ clouds:
   
 
 inputs:
-  - REGION: eu-west-1
-  - TENANT: test
-  # - CERT_ARN: arn:aws:acm:us-west-2:102305463663:certificate/5cd0b381-8051-460d-9f9e-c1dbb9ccf701
-  - password: 
+  - DB_USER: root  # Used to define the db admin account
+  - DB_PASS:
       display_style: masked
-      default_value: iseeyou
-  - version:
-      description: valid values - 1.0 1.1 1.6
-      optional: true
+      description: please set the root database passwor
+      default_value: 12345
+  # Used to define the db admin password
+  - DB_NAME: demo_db  # DB_NAME - a target database name
 
+# These are the applications that will be deployed in this blueprint
 applications:
-  - staging-vm:
-        input_values:
-          - sandbox_id: $torque.environment.id
-          # - randomint: $colony.parameters.bob
-          - randomint: 4
-          # - randomint: $outputs.rms-ec2-bootstrap.randomint
-          # - randomint1: $colony.services.rms-ec2-bootstrap.outputs.randomint
-        #depends_on:
-        #  - rms-ec2-bootstrap
-        #  - staging-vm1
-  # - staging-vm1:
-  #       input_values:
-  #         - SANDBOX_ID: $colony.environment.id
-  #         - randomint: 3
-  #         - randomint1: 4
+  - mysql:  # One instance of mysql (see: applications/mysql/mysql.yaml)
+      input_values:
+        - DB_USER: $DB_USER  # Assign values from the app inputs
+        - DB_PASS: $DB_PASS
+        - DB_NAME: $DB_NAME
+  # One instance of java-spring-website
+  # (see: applications/java-spring-website/java-spring-website.yaml)
+  - java-spring-website:
+      instances: 1
+      input_values:
+        - DB_USER: $DB_USER
+        - DB_PASS: $DB_PASS
+        - DB_NAME: $DB_NAME
+      # The website depends on MySQL and will start deploying only when
+      # the database is ready
+      depends_on:
+        - mysql
+        
 services:
 
   - rms-ec2-bootstrap11:
@@ -53,59 +55,6 @@ services:
   #         - REGION: $REGION
   #       depends_on:
   #         - rms-ec2-bootstrap
-
-
-
-
-
-ingress:
-  listeners:
-    - http: 80
-      rules:
-      - path: /
-        application: staging-vm
-        port: 80
-        #shortcut: ${colony.environment.public_address}
-      - path: /bah
-        application: staging-vm
-        port: 80
-        #shortcut: $colony.environment.public_address
-      - path: /other
-        application: staging-vm
-        port: 80
-        #shortcut: ${PublicAddress}/other
-      - path: /other1
-        application: staging-vm
-        port: 80
-        #shortcut: ${colony.environment.public_address}/other1
-      # - path: /other2
-      #   application: staging-vm
-      #   port: 80
-      #   shortcut: $colony.environment.public_address/other2
-      - default: true
-        application: staging-vm
-        port: 80
-
-# ingress:
-#   listeners:
-#     - http: 80
-#       redirect_to_listener: 443
-#     - https: 443
-#       certificate: $CERT_ARN
-#       rules:
-#       - path: /Admin/
-#         host: ${colony.environment.id}.csqrlabs.cloud
-#         application: staging-vm
-#         port: 80
-#         shortcut: ${colony.environment.id}.csqrlabs.cloud/Admin
-#       # - default: true
-#       #   port: 80
-#       #   application: staging-vm
-#       #   shortcut: ${colony.environment.id}.csqrlabs.cloud/ComDev
-
-
-# ingress:
-#   enabled: false
 
 debugging:
   bastion_availability: enabled-on
