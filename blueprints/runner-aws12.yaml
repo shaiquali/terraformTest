@@ -21,6 +21,7 @@ inputs:
       default_value: 12345
   # Used to define the db admin password
   - DB_NAME: demo_db  # DB_NAME - a target database name
+  - REGION: eu-west-1
 
 # These are the applications that will be deployed in this blueprint
 applications:
@@ -41,6 +42,7 @@ applications:
       # the database is ready
       depends_on:
         - mysql
+
 services:
 
   - rms-ec2-bootstrap12:
