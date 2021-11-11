@@ -9,19 +9,20 @@ resource "aws_ssm_parameter" "foo" {
   type  = "String"
   value = "bar12"
   overwrite = true
+  tags = local.customTags
 
-  tags = {
-    "APPID" = "test"
-    "APPLICATION OWNER" = "hghg"
-    "APPLICATION NAME" = "dnfgd"
-  }
+  # tags = {
+  #   "APPID" = "test"
+  #   "APPLICATION OWNER" = "hghg"
+  #   "APPLICATION NAME" = "dnfgd"
+  # }
 }
 
 
-# locals {
-#   customTags = {
-#     "APPID" = "test",
-#     "APPLICATION OWNER" = "hghg",
-#     "APPLICATION NAME" = "dnfgd"
-#   }
-# }
+locals {
+  customTags = {
+    "APPID" = "test",
+    "APPLICATION OWNER" = "hghg",
+    "APPLICATION NAME" = "dnfgd"
+  }
+}
