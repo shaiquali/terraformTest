@@ -9,7 +9,7 @@ resource "aws_ssm_parameter" "foo" {
   type  = "String"
   value = "bar12"
   overwrite = true
-  tags = local.customTags
+  tags = "${local.customTags}"
 
   # tags = {
   #   "APPID" = "test"
