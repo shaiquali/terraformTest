@@ -1,11 +1,11 @@
-resource "random_integer" "randomint" {
-  min     = 1000
-  max     = 5000
+# resource "random_integer" "randomint" {
+#   min     = 1000
+#   max     = 5000
 
-}
+# }
 
 resource "aws_ssm_parameter" "foo" {
-  name  = "foo121"
+  name  = "foo-${var.sandbox_id}"
   type  = "String"
   value = "bar12"
   overwrite = true
