@@ -1,0 +1,117 @@
+spec_version: 1
+kind: blueprint
+metadata:
+  description: Testing tf plan
+    
+clouds: 
+  #- AWS: us-west-2
+  #- AWSOther: us-east-1 #sso aws 
+  - AWS: eu-west-1
+
+# artifacts:
+#   - ec2-sql: cs/ec2-sql.zip
+#   - ec2-web: cs/ec2-web.zip
+  
+
+inputs:
+  - REGION: eu-west-1
+  - TENANT: test
+  # - CERT_ARN: arn:aws:acm:us-west-2:102305463663:certificate/5cd0b381-8051-460d-9f9e-c1dbb9ccf701
+  - password: 
+      display_style: masked
+      default_value: iseeyou
+  - version:
+      description: valid values - 1.0 1.1 1.6
+      optional: true
+  - SANDBOX_ID
+  - test:
+      possible_values:
+...
+
+
+applications:
+  - staging-vm:
+        input_values:
+          - sandbox_id: $SANDBOX_ID
+          # - randomint: $colony.parameters.bob
+          - randomint: 4
+          # - randomint: $outputs.rms-ec2-bootstrap.randomint
+          # - randomint1: $colony.services.rms-ec2-bootstrap.outputs.randomint
+        #depends_on:
+        #  - rms-ec2-bootstrap
+        #  - staging-vm1
+  # - staging-vm1:
+  #       input_values:
+  #         - SANDBOX_ID: $colony.environment.id
+  #         - randomint: 3
+  #         - randomint1: 4
+services:
+
+  - rms-ec2-bootstrap:
+        input_values:
+          # - branch: $torque.repos.current.branch
+          - REGION: $REGION
+          - SANDBOX_ID: $SANDBOX_ID
+  # - test:
+  #       input_values:
+  #         - tenant: $TENANT
+  #         - SANDBOX_ID: $colony.environment.id
+  #         - REGION: $REGION
+  #       depends_on:
+  #         - rms-ec2-bootstrap
+
+
+
+
+
+ingress:
+  listeners:
+    - http: 80
+      rules:
+      - path: /
+        application: staging-vm
+        port: 80
+        #shortcut: ${colony.environment.public_address}
+      - path: /bah
+        application: staging-vm
+        port: 80
+        #shortcut: $colony.environment.public_address
+      - path: /other
+        application: staging-vm
+        port: 80
+        #shortcut: ${PublicAddress}/other
+      - path: /other1
+        application: staging-vm
+        port: 80
+        #shortcut: ${colony.environment.public_address}/other1
+      # - path: /other2
+      #   application: staging-vm
+      #   port: 80
+      #   shortcut: $colony.environment.public_address/other2
+      - default: true
+        application: staging-vm
+        port: 80
+
+# ingress:
+#   listeners:
+#     - http: 80
+#       redirect_to_listener: 443
+#     - https: 443
+#       certificate: $CERT_ARN
+#       rules:
+#       - path: /Admin/
+#         host: ${colony.environment.id}.csqrlabs.cloud
+#         application: staging-vm
+#         port: 80
+#         shortcut: ${colony.environment.id}.csqrlabs.cloud/Admin
+#       # - default: true
+#       #   port: 80
+#       #   application: staging-vm
+#       #   shortcut: ${colony.environment.id}.csqrlabs.cloud/ComDev
+
+
+# ingress:
+#   enabled: false
+
+debugging:
+  availability: on
