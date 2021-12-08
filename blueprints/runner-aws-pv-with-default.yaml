@@ -27,7 +27,7 @@ inputs:
       possible_values: 
       - defaultpossible
       - possible1
-      - possible1
+      - possible2
       - possible3
 
 # These are the applications that will be deployed in this blueprint
