@@ -1,0 +1,58 @@
+spec_version: 1
+kind: blueprint
+metadata:
+  description: Testing tf plan
+    
+clouds: 
+  #- AWS: us-west-2
+  #- AWSOther: us-east-1 #sso aws 
+  - AWS: eu-west-1
+
+# artifacts:
+#   - ec2-sql: cs/ec2-sql.zip
+#   - ec2-web: cs/ec2-web.zip
+  
+
+inputs:
+  - DB_USER: root  # Used to define the db admin account
+  - DB_PASS:
+      display_style: masked
+      description: please set the root database passwor
+      default_value: 12345
+  # Used to define the db admin password
+  - DB_NAME: demo_db  # DB_NAME - a target database name
+  - REGION: eu-west-1
+
+# These are the applications that will be deployed in this blueprint
+applications:
+  - mysql:  # One instance of mysql (see: applications/mysql/mysql.yaml)
+      input_values:
+        - DB_USER: $DB_USER  # Assign values from the app inputs
+        - DB_PASS: $DB_PASS
+        - DB_NAME: $DB_NAME
+  # One instance of java-spring-website
+  # (see: applications/java-spring-website/java-spring-website.yaml)
+  - java-spring-website:
+      instances: 1
+      input_values:
+      # The website depends on MySQL and will start deploying only when
+      # the database is ready
+      depends_on:
+        - mysql
+
+services:
+
+  - rms-ec2-bootstrap12:
+        input_values:
+          - branch: $torque.repos.current.branch
+          - REGION: $REGION
+  # - test:
+  #       input_values:
+  #         - tenant: $TENANT
+  #         - SANDBOX_ID: $colony.environment.id
+  #         - REGION: $REGION
+  #       depends_on:
+  #         - rms-ec2-bootstrap
+
+debugging:
+  bastion_availability: enabled-on
