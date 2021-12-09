@@ -57,5 +57,7 @@ services:
   #       depends_on:
   #         - rms-ec2-bootstrap
 
+outputs:
+
 debugging:
   bastion_availability: enabled-on
