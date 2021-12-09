@@ -27,17 +27,17 @@ inputs:
 applications:
   - mysql:  # One instance of mysql (see: applications/mysql/mysql.yaml)
       input_values:
-        - DB_USER: $DB_USER  # Assign values from the app inputs
-        - DB_PASS: $DB_PASS
-        - DB_NAME: $DB_NAME
+        - DB_USER: root  # Assign values from the app inputs
+        - DB_PASS: 12345
+        - DB_NAME: demo_db
   # One instance of java-spring-website
   # (see: applications/java-spring-website/java-spring-website.yaml)
   - java-spring-website:
       instances: 1
       input_values:
-        - DB_USER: $DB_USER
-        - DB_PASS: $DB_PASS
-        - DB_NAME: $DB_NAME
+        - DB_USER: root
+        - DB_PASS: 12345
+        - DB_NAME: demo_db
       # The website depends on MySQL and will start deploying only when
       # the database is ready
       depends_on:
